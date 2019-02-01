@@ -94,6 +94,35 @@ paths:
         400:
           description: "bad input parameter"
       x-swagger-router-controller: "Peliculas"
+    put:
+      tags:
+      - "peliculas"
+      summary: "modificar una película"
+      description: Modificar una película
+      operationId: "updatePelicula"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: path
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "peliculaItem"
+        description: "Pelicula item to modify"
+        required: true
+        schema:
+          $ref: "#/definitions/PeliculaModificar"
+      responses:
+        201:
+          description: "item modified"
+        400:
+          description: "invalid input, object invalid"
+        404:
+          description: "la película no existe"
+      x-swagger-router-controller: "Peliculas"
     delete:
       tags: 
       - "peliculas"
@@ -143,5 +172,25 @@ definitions:
       genero: "Aventura"
       titulo: "Los Simuladores"
       id: 123
+  PeliculaModificar:
+    type: "object"
+    required:
+    - "director"
+    - "genero"
+    - "titulo"
+    properties:
+      titulo:
+        type: "string"
+        example: "Los Simuladores"
+      genero:
+        type: "string"
+        example: "Aventura"
+      director:
+        type: "string"
+        example: "Damian Szifron"
+    example:
+      director: "Damian Szifron"
+      genero: "Aventura"
+      titulo: "Los Simuladores"
 # Added by API Auto Mocking Plugin
 basePath: /angular5

@@ -49,12 +49,13 @@ exports.getPeliculas = function (id) {
 exports.getPeliculasxId = function (id) {
   return new Promise(function (resolve, reject) {
     if (typeof id !== 'undefined') {
-      var sqlQuery = "select id,titulo,director,genero,foto from peliculas where habilitado = 1 and id = ?";
-      var sqlParams = [];
-      sqlParams.push(id);
+      var sqlQuery = "select id,titulo,director,genero,foto from peliculas where habilitado = 1 and id = :id";
+      var sqlParams = {
+        id: id
+      };
       Conexion.execute(sqlQuery, sqlParams).then(function (response) {
-        console.log(response);
-        resolve(response);
+        //console.log(response[0]);
+        resolve(response[0]);
       }).catch(function (connection, error) {
         reject({
           code: 500,
@@ -81,5 +82,22 @@ exports.eliminarPelicula = function (id) {
     } else {
       reject("Debe pasar un id correcto");
     }
+  })
+}
+
+exports.updatePelicula = function(id,peliculaItem){
+  return new Promise(function (resolve, reject) {
+    var sqlQuery = "update peliculas set titulo = :titulo, director = :director, genero = :genero where id = :id";
+    var sqlParams = {
+      id: id,
+      titulo: peliculaItem.titulo,
+      genero : peliculaItem.genero,
+      director: peliculaItem.director
+    };
+    Conexion.execute(sqlQuery, sqlParams).then(function (response) {
+      resolve(response);
+    }).catch(function (error) {
+      reject({code:500,payload:"Error en la ejecución del script: " + error});
+    });
   })
 }

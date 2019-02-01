@@ -19,6 +19,15 @@ var ConexionMysql = function () {
                     //throw error;
                     reject(connection, err);
                 }
+                connection.config.queryFormat = function (query, values) {
+                    if (!values) return query;
+                    return query.replace(/\:(\w+)/g, function (txt, key) {
+                      if (values.hasOwnProperty(key)) {
+                        return this.escape(values[key]);
+                      }
+                      return txt;
+                    }.bind(this));
+                  };
                 connection.query(query,sqlParams, function (error, result,fields) {
                     if (error) {
                         console.log(error.sqlMessage);

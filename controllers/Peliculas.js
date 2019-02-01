@@ -48,3 +48,16 @@ module.exports.eliminarPelicula = function eliminarPelicula (req,res,next){
     })
 }
 
+module.exports.updatePelicula = function updatePelicula (req,res,next){
+  var id = req.swagger.params['id'].value;
+  var peliculaItem = req.swagger.params['peliculaItem'].value;
+  Peliculas.updatePelicula(id,peliculaItem)
+    .then(function(response){
+      utils.writeJson(res,response);
+    })
+    .catch(function(response){
+      console.log(response);
+      utils.writeJson(res,response,500);
+    })
+}
+

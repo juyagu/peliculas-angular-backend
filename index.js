@@ -2,9 +2,12 @@
 
 var fs = require('fs'),
     path = require('path'),
-    http = require('http');
+    http = require('http'),
+    cors = require('cors');
+
 
 var app = require('connect')();
+app.use(cors());
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = 3001;
@@ -34,6 +37,8 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
+
+  
 
   // Start the server
   http.createServer(app).listen(serverPort, function () {
