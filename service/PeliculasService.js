@@ -71,9 +71,13 @@ exports.getPeliculasxId = function (id) {
 exports.eliminarPelicula = function (id) {
   return new Promise(function (resolve, reject) {
     if (typeof id !== 'undefined') {
-      var sqlQuery = "update peliculas set habilitado = 0 where id = ?";
-      var sqlParams = [];
-      sqlParams.push(id);
+      var sqlQuery = "update peliculas set habilitado = 0 where id = :id";
+	  console.log(id);
+      //var sqlParams = [];
+      //sqlParams.push(id);
+	  var sqlParams = {
+		  id: id
+	  };
       Conexion.execute(sqlQuery, sqlParams).then(function (response) {
         resolve(response);
       }).catch(function (error) {
