@@ -61,3 +61,14 @@ module.exports.updatePelicula = function updatePelicula (req,res,next){
     })
 }
 
+module.exports.obtenerGeneros = function obtenerGeneros (req,res,next){
+  Peliculas.obtenerGeneros()
+    .then(function(response){
+      utils.writeJson(res,response);
+    })
+    .catch(function(response){
+      console.log(response);
+      utils.writeJson(res,response,500);
+    })
+}
+

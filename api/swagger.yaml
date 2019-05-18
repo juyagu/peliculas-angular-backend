@@ -142,6 +142,25 @@ paths:
         400:
           description: "invalid input, object invalid"
       x-swagger-router-controller: "Peliculas"
+  /generos:
+    get:
+      tags:
+      - "generos"
+      summary: "Géneros de películas"
+      description: "Obtener los géneros de las películas"
+      operationId: "obtenerGeneros"
+      produces:
+      - "aplication/json"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GeneroItem"
+        400:
+          description: "bad input parameter"
+      x-swagger-router-controller: "Peliculas"  
 definitions:
   PeliculaItem:
     type: "object"
@@ -192,5 +211,14 @@ definitions:
       director: "Damian Szifron"
       genero: "Aventura"
       titulo: "Los Simuladores"
+  GeneroItem:
+    type: "object"
+    properties:
+      id_genero:
+        type: "number"
+        example: 1
+      descripcion:
+        type: "string"
+        example: "Drama"
 # Added by API Auto Mocking Plugin
 basePath: /angular5

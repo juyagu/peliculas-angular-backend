@@ -29,7 +29,7 @@ exports.addPelicula = function (peliculaItem) {
  **/
 exports.getPeliculas = function (id) {
   return new Promise(function (resolve, reject) {
-    var sqlQuery = 'select id,titulo,director,genero,foto from peliculas where habilitado = 1';
+    var sqlQuery = 'select id,titulo,director,descripcion genero,foto from peliculas join generos on peliculas.genero = generos.id_genero where habilitado = 1';
     var sqlParams = [];
     if (typeof id !== 'undefined') {
       sqlQuery += ' where id = ?';
@@ -49,7 +49,7 @@ exports.getPeliculas = function (id) {
 exports.getPeliculasxId = function (id) {
   return new Promise(function (resolve, reject) {
     if (typeof id !== 'undefined') {
-      var sqlQuery = "select id,titulo,director,genero,foto from peliculas where habilitado = 1 and id = :id";
+      var sqlQuery = "select peliculas.id,peliculas.titulo,peliculas.director,generos.id_genero,generos.descripcion genero ,peliculas.foto from peliculas JOIN generos ON peliculas.genero = generos.id_genero  where peliculas.habilitado = 1 and peliculas.id = :id";
       var sqlParams = {
         id: id
       };
@@ -95,7 +95,7 @@ exports.updatePelicula = function(id,peliculaItem){
     var sqlParams = {
       id: id,
       titulo: peliculaItem.titulo,
-      genero : peliculaItem.genero,
+      genero : peliculaItem.id_genero,
       director: peliculaItem.director
     };
     Conexion.execute(sqlQuery, sqlParams).then(function (response) {
@@ -103,5 +103,17 @@ exports.updatePelicula = function(id,peliculaItem){
     }).catch(function (error) {
       reject({code:500,payload:"Error en la ejecución del script: " + error});
     });
+  })
+}
+
+exports.obtenerGeneros = function(){
+  return new Promise(function(resolve,reject){
+    var sqlQuery = "select id_genero,descripcion from generos";
+    var sqlParams = [];
+    Conexion.execute(sqlQuery,sqlParams).then(function(response){
+      resolve(response);
+    }).catch(function(error){
+      reject({code:500,payload:"Error en la ejecución del script: " + error});
+    })
   })
 }
