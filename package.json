@@ -15,7 +15,7 @@
   "dependencies": {
     "connect": "^3.2.0",
     "cors": "^2.8.5",
-    "js-yaml": "^3.3.0",
+    "js-yaml": "^3.13.1",
     "mongodb": "^3.1.13",
     "mysql": "^2.16.0",
     "swagger-tools": "0.10.1"
