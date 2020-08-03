@@ -10,12 +10,12 @@ var Conexion = require('./../connections/connection.js');
  **/
 exports.addPelicula = function (peliculaItem) {
   return new Promise(function (resolve, reject) {
-    var sqlQuery = "insert into peliculas set ?";
+    var sqlQuery = "insert into peliculas (titulo,director,genero,foto,habilitado) values (:titulo,:director,2,:foto,1)";
     Conexion.execute(sqlQuery, peliculaItem).then(function (response) {
       resolve(response);
     }).catch(function (connection, error) {
       reject('Error al querer guardar la pelicula');
-    })
+    }) 
   });
 }
 
@@ -91,7 +91,7 @@ exports.eliminarPelicula = function (id) {
 
 exports.updatePelicula = function(id,peliculaItem){
   return new Promise(function (resolve, reject) {
-    var sqlQuery = "update peliculas set titulo = :titulo, director = :director, genero = :genero where id = :id";
+    var sqlQuery = "update peliculas set titulo = :titulo, director = :director, genero = 1 where id = :id";
     var sqlParams = {
       id: id,
       titulo: peliculaItem.titulo,
