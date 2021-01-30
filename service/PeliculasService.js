@@ -29,7 +29,7 @@ exports.addPelicula = function (peliculaItem) {
  **/
 exports.getPeliculas = function (id) {
   return new Promise(function (resolve, reject) {
-    var sqlQuery = 'select id,titulo,director,descripcion genero,foto from peliculas join generos on peliculas.genero = generos.id_genero where habilitado = 1';
+    var sqlQuery = 'select id id_pelicula,titulo,director,descripcion genero,foto from peliculas join generos on peliculas.genero = generos.id_genero where habilitado = 1';
     var sqlParams = [];
     if (typeof id !== 'undefined') {
       sqlQuery += ' where id = ?';
@@ -49,7 +49,7 @@ exports.getPeliculas = function (id) {
 exports.getPeliculasxId = function (id) {
   return new Promise(function (resolve, reject) {
     if (typeof id !== 'undefined') {
-      var sqlQuery = "select peliculas.id,peliculas.titulo,peliculas.director,generos.id_genero,generos.descripcion genero ,peliculas.foto from peliculas JOIN generos ON peliculas.genero = generos.id_genero  where peliculas.habilitado = 1 and peliculas.id = :id";
+      var sqlQuery = "select peliculas.id id_pelicula,peliculas.titulo,peliculas.director,generos.id_genero,generos.descripcion genero ,peliculas.foto from peliculas JOIN generos ON peliculas.genero = generos.id_genero  where peliculas.habilitado = 1 and peliculas.id = :id";
       var sqlParams = {
         id: id
       };
